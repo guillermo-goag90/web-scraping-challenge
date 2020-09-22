@@ -11,7 +11,7 @@ import pandas as pd
 
 def scrape():
 
-    # Design function to automate creation of BeautifulSoup objects
+# Design function to automate creation of BeautifulSoup objects
     def create_soup(url):
         """Create a BeautifulSoup object by passing a url"""
 
@@ -43,7 +43,6 @@ def scrape():
         description = result.find('div', class_='article_teaser_body').text.strip()
         
         extension = result.a['href']
-        source_url = 'https://mars.nasa.gov'
         article_url = f'{mars_source_url}{extension}'
 
         news_dict = {
@@ -53,33 +52,38 @@ def scrape():
         }
         
         news_json.append(news_dict)
+    
+    return news_json
 
-    # II. Mars Hemispheres
-    # URLs for scraping photos
-    hemispheres_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
-    base_url = 'http://astrogeology.usgs.gov'
+    # #II. Featured image
+    # img_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
 
-    # Go on index url and create BeautifulSoup object. Scrape to find URL of hemispheres extension
-    soup_index = create_soup(hemispheres_url)
-    containers = soup_index.find_all('div', class_="item")
-    url_list = [base_url + container.a['href'] for container in containers]
+    # # III. Mars Hemispheres
+    # # URLs for scraping photos
+    # hemispheres_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    # base_url = 'http://astrogeology.usgs.gov'
 
-    # Create a loop that visits all 4 sites, creates BeautifulSoup objects and retrieves img src parsing html
-    hemisphere_image_urls = []
+    # # Go on index url and create BeautifulSoup object. Scrape to find URL of hemispheres extension
+    # soup_index = create_soup(hemispheres_url)
+    # containers = soup_index.find_all('div', class_="item")
+    # url_list = [base_url + container.a['href'] for container in containers]
 
-    for url in url_list:
-        soup = create_soup(url)
+    # # Create a loop that visits all 4 sites, creates BeautifulSoup objects and retrieves img src parsing html
+    # hemisphere_image_urls = []
+
+    # for url in url_list:
+    #     soup = create_soup(url)
         
-        title = soup.find('h2', class_='title').text.strip()
-        title = title.replace(' Enhanced', '')
+    #     title = soup.find('h2', class_='title').text.strip()
+    #     title = title.replace(' Enhanced', '')
         
-        img_container = soup.find('div', class_='downloads')
-        img_href = img_container.li.a['href']
-        img_url = f'{base_url}{img_href}'
+    #     img_container = soup.find('div', class_='downloads')
+    #     img_href = img_container.li.a['href']
+    #     img_url = f'{base_url}{img_href}'
         
-        dict_entry = {'title': title,
-                    'img_url': img_url}
+    #     dict_entry = {'title': title,
+    #                 'img_url': img_url}
         
-        hemisphere_image_urls.append(dict_entry)
+    #     hemisphere_image_urls.append(dict_entry)
 
-    return news_json, hemisphere_image_urls
+    #return news_json
