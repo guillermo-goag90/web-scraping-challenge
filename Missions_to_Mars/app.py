@@ -29,10 +29,11 @@ def scrape_news():
 def scrape():
     """Calls scrape.py and updates MongoDB collections for 'mars_app' database"""
 
+    scrape_data = scrape_mars.scrape()
+    
     # Query Mongo database and find latest article
     nasa_news = mongo.db.nasa_news
-    news_data = scrape_mars.scrape()
-    latest_news = news_data[0]
+    latest_news = scrape_data[0]
     nasa_news.update({}, latest_news, upsert=True)
 
     #Call scrape function

@@ -8,24 +8,25 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import pandas as pd
 
+# Design function to automate creation of BeautifulSoup objects
+def create_soup(url):
+    """Create a BeautifulSoup object by passing a url"""
+
+    # Define path to chromedriver
+    executable_path = {'executable_path': 'C:\webdrivers\chromedriver.exe'}
+    # Create new browser object
+    browser = Browser('chrome', **executable_path, headless=True)
+    
+    # Extract html
+    browser.visit(url)
+    html = browser.html
+    soup = BeautifulSoup(html, 'html.parser')
+    
+    return soup
+
 
 def scrape():
-
-# Design function to automate creation of BeautifulSoup objects
-    def create_soup(url):
-        """Create a BeautifulSoup object by passing a url"""
-
-        # Define path to chromedriver
-        executable_path = {'executable_path': 'C:\webdrivers\chromedriver.exe'}
-        # Create new browser object
-        browser = Browser('chrome', **executable_path, headless=True)
-        
-        # Extract html
-        browser.visit(url)
-        html = browser.html
-        soup = BeautifulSoup(html, 'html.parser')
-        
-        return soup
+    """Scrape different Mars-related websites to retrieve information used in Flask application"""
 
     # I. NASA Mars News
     # Scrape NASA Mars News
