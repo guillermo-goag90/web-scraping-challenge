@@ -1,0 +1,9 @@
+.img-fluid {
+    max-width: 100%;
+    height: auto
+  }
+
+.card-bottom-padding {
+    padding-bottom: 20px;
+}
+  

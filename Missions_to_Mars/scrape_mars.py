@@ -54,10 +54,28 @@ def scrape():
         
         news_json.append(news_dict)
     
-    return news_json
+    
+    #II. Featured image
+    #img_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
+    
+    #III. Mars table
+    mars_facts_url = 'https://space-facts.com/mars/'
+    mars_table = pd.read_html(mars_facts_url)
+    mars_df = mars_table[0]
+    mars_df = mars_df.rename(columns={0: 'Characteristics', 1:''}).set_index('Characteristics', inplace=False)
+    html_mars_table = mars_df.to_html()
+    html_mars_table = html_mars_table.replace('\n', '')
+    
+    return news_json, html_mars_table
 
-    # #II. Featured image
-    # img_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
+#scraped_data = scrape()
+
+#json = scraped_data[0]
+#table = scraped_data[1]
+
+#print(json)
+#print(table)
+
 
     # # III. Mars Hemispheres
     # # URLs for scraping photos

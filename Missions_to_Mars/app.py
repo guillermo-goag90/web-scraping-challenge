@@ -16,30 +16,33 @@ def index():
     news = mongo.db.nasa_news.find_one()
     return render_template("index.html", news=news)
 
-@app.route('/news')
-def scrape_news():
-    """Returns a JSON list of the most recent news available on Nasa's Mars website """
-    recent_news = scrape_mars.scrape()
+# @app.route('/news')
+# def scrape_news():
+#     """Returns a JSON list of the most recent news available on Nasa's Mars website """
+#     recent_news, table = scrape_mars.scrape()
 
-    #total_results = len(recent_news)
-    nasa_news_dict = {"articles": [news for news in recent_news]}
-    return jsonify(nasa_news_dict)
+#     #total_results = len(recent_news)
+#     nasa_news_dict = {"articles": [news for news in recent_news]}
+#     return jsonify(nasa_news_dict)
 
 @app.route('/scrape')
 def scrape():
     """Calls scrape.py and updates MongoDB collections for 'mars_app' database"""
 
-    scrape_data = scrape_mars.scrape()
+    news, table = scrape_mars.scrape()
     
-    # Query Mongo database and find latest article
+    # Query nasa_news collection and find latest article
     nasa_news = mongo.db.nasa_news
-    latest_news = scrape_data[0]
+    latest_news = news[0]
     nasa_news.update({}, latest_news, upsert=True)
 
-    #Call scrape function
-    #latest_news = mongo.db.latest_news
-    #mars_data = scrape_mars.scrape()
-    #news.update({}, mars_data, upsert=True)
+    # Query featured_img collection and find latest full-size photo
+    
+
+    # Query table collection and find latest full-size photo
+    table = mongo.db.mars_facts
+    #table.update({}, table, upsert=True)
+
     return redirect("/", code=302)
 
 
